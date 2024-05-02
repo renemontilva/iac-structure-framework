@@ -102,5 +102,3 @@ The layered design ensures that only essential resource information is accessibl
 Now that you understand the core principles, unleash the power of this framework for efficient and secure cloud management.
 
 For smaller, initial projects, a monolithic Terraform repository might be sufficient. However, for larger or more complex projects, defining separate repositories for each layer (Governance, Core, Service, Application) is recommended. This promotes better organization, maintainability, and collaboration.
-
-For larger or more complex projects, it is recommended to define separate repositories for each layer (Governance, Core, Service, Application). This promotes better organization, maintainability, and collaboration.
