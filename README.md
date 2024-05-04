@@ -2,6 +2,8 @@
 
 This document presents a Terraform project structure inspired on the layered architecture from the software architectural pattern and Terraform best practices. Based on my experience I designed this approach to make it easy for organizations to achieve efficient and secure cloud infrastructure management.
 
+![Layers](assets/layers.png)
+
 ## Key Features of the Terraform Framework
 
 - **Layers Design:** Leveraging a layered design, the architecture promotes both simplified management and loose coupling between layers, enhancing maintainability and flexibility.
