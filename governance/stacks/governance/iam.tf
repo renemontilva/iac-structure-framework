@@ -3,9 +3,7 @@
 # This role is used by the Governance stack to manage permissions to all other stacks  #
 ########################################################################################
 
-
 #### IAM Role and Policy for Governance ####
-
 
 module "governance" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-assumable-role"
@@ -15,7 +13,7 @@ module "governance" {
   }
 
   create_role = true
-  role_name   = "governance"
+  role_name   = "GovernanceRole"
   role_requires_mfa = false
 
   trusted_role_arns = [
@@ -79,7 +77,6 @@ module "dev_account_policy" {
   path    = "/"
   description = "IAM policy for Dev Account"
   policy = templatefile("${path.module}/policies/stack_role_policies.json", {})
-  
 }
 
 #### IAM Role and Policy for Staging Account ####
@@ -102,7 +99,6 @@ module "stg_account_role" {
   custom_role_policy_arns = [
     module.stg_account_policy.arn,
   ]
-  
 }
 
 module "stg_account_policy" {
@@ -116,7 +112,6 @@ module "stg_account_policy" {
   path    = "/"
   description = "IAM policy for Staging Account"
   policy = templatefile("${path.module}/policies/stack_role_policies.json", {})
-  
 }
 
 #### IAM Role and Policy for Production Account ####
@@ -152,5 +147,4 @@ module "prd_account_policy" {
   path    = "/"
   description = "IAM policy for Production Account"
   policy = templatefile("${path.module}/policies/stack_role_policies.json", {})
-  
 }
