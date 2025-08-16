@@ -1,0 +1,64 @@
+{
+  "execution_order": [
+    "foundation-network",
+    "platform-eks",
+    "services-db",
+    "apps-orders"
+  ],
+  "nodes": [
+    {
+      "stack_id": "foundation-network",
+      "name": "Foundation Network",
+      "layer_order": 0,
+      "depends_on": [],
+      "outputs_contract": "interfaces/contracts/foundation-network/v1.0.0/outputs.schema.json",
+      "file": "infra/layers/00-foundation/network/layer.yaml"
+    },
+    {
+      "stack_id": "platform-eks",
+      "name": "Platform EKS",
+      "layer_order": 10,
+      "depends_on": [
+        "foundation-network"
+      ],
+      "outputs_contract": "interfaces/contracts/platform-eks/v1.0.0/outputs.schema.json",
+      "file": "infra/layers/10-platform/eks/layer.yaml"
+    },
+    {
+      "stack_id": "services-db",
+      "name": "Services DB",
+      "layer_order": 20,
+      "depends_on": [
+        "foundation-network",
+        "platform-eks"
+      ],
+      "outputs_contract": "interfaces/contracts/services-db/v1.0.0/outputs.schema.json",
+      "file": "infra/layers/20-services/db/layer.yaml"
+    },
+    {
+      "stack_id": "apps-orders",
+      "name": "Orders App",
+      "layer_order": 30,
+      "depends_on": [
+        "services-db",
+        "platform-eks"
+      ],
+      "outputs_contract": "interfaces/contracts/apps-orders/v1.0.0/outputs.schema.json",
+      "file": "infra/layers/30-apps/orders/layer.yaml"
+    }
+  ],
+  "dependency_injection": {
+    "services-db": [
+      "foundation-network",
+      "platform-eks"
+    ],
+    "foundation-network": [],
+    "platform-eks": [
+      "foundation-network"
+    ],
+    "apps-orders": [
+      "services-db",
+      "platform-eks"
+    ]
+  }
+}

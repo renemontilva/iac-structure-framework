@@ -1,0 +1,8 @@
+name: Services DB
+stack_id: services-db
+layer_order: 20
+path: infra/layers/20-services/db
+environments: [dev, stage, prod]
+depends_on: [foundation-network, platform-eks]
+outputs_contract: interfaces/contracts/services-db/v1.0.0/outputs.schema.json
+apply_strategy: auto

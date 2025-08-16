@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/schemas/layer.schema.json",
+  "title": "Terraform Stack Layer Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "name": { "type": "string", "minLength": 1 },
+    "stack_id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+    "layer_order": { "type": "integer", "minimum": 0 },
+    "path": { "type": "string", "minLength": 1 },
+    "environments": {
+      "type": "array",
+      "items": { "type": "string", "enum": ["dev", "stage", "prod"] },
+      "minItems": 1
+    },
+    "depends_on": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+      "default": []
+    },
+    "outputs_contract": { "type": "string", "minLength": 1 },
+    "apply_strategy": { "type": "string", "enum": ["auto", "manual", "approval-required"] }
+  },
+  "required": [
+    "name",
+    "stack_id",
+    "layer_order",
+    "path",
+    "environments",
+    "depends_on",
+    "outputs_contract",
+    "apply_strategy"
+  ]
+}

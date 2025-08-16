@@ -1,0 +1,8 @@
+name: Platform EKS
+stack_id: platform-eks
+layer_order: 10
+path: infra/layers/10-platform/eks
+environments: [dev, stage, prod]
+depends_on: [foundation-network]
+outputs_contract: interfaces/contracts/platform-eks/v1.0.0/outputs.schema.json
+apply_strategy: auto
