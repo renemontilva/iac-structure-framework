@@ -1,0 +1,6 @@
+{
+	"cluster_name": "dev-eks-01",
+	"cluster_endpoint": "https://ABCDE.gr7.us-east-1.eks.amazonaws.com",
+	"vpc_id": "vpc-0abc1234def567890",
+	"public_subnet_ids": ["subnet-aaa", "subnet-bbb"]
+}

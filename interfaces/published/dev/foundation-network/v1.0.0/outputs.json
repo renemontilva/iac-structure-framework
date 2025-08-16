@@ -1,0 +1,5 @@
+{
+	"vpc_id": "vpc-0abc1234def567890",
+	"public_subnet_ids": ["subnet-aaa", "subnet-bbb"],
+	"region": "us-east-1"
+}

@@ -1,0 +1,17 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "interfaces/contracts/foundation-network/v1.0.0/outputs.schema.json",
+	"title": "foundation-network outputs",
+	"type": "object",
+	"additionalProperties": false,
+	"properties": {
+		"vpc_id": { "type": "string", "pattern": "^vpc-" },
+		"public_subnet_ids": {
+			"type": "array",
+			"items": { "type": "string", "pattern": "^subnet-" },
+			"minItems": 2
+		},
+		"region": { "type": "string" }
+	},
+	"required": ["vpc_id", "public_subnet_ids", "region"]
+}

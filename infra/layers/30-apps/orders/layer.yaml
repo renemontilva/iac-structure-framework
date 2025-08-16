@@ -1,0 +1,8 @@
+name: Orders App
+stack_id: apps-orders
+layer_order: 30
+path: infra/layers/30-apps/orders
+environments: [dev, stage, prod]
+depends_on: [services-db, platform-eks]
+outputs_contract: interfaces/contracts/apps-orders/v1.0.0/outputs.schema.json
+apply_strategy: auto

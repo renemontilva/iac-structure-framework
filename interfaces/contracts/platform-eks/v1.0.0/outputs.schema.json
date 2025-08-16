@@ -1,0 +1,18 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "interfaces/contracts/platform-eks/v1.0.0/outputs.schema.json",
+	"title": "platform-eks outputs",
+	"type": "object",
+	"additionalProperties": false,
+	"properties": {
+		"cluster_name": { "type": "string" },
+		"cluster_endpoint": { "type": "string" },
+		"vpc_id": { "type": "string", "pattern": "^vpc-" },
+		"public_subnet_ids": {
+			"type": "array",
+			"items": { "type": "string", "pattern": "^subnet-" },
+			"minItems": 2
+		}
+	},
+	"required": ["cluster_name", "cluster_endpoint", "vpc_id", "public_subnet_ids"]
+}

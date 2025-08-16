@@ -1,0 +1,11 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "interfaces/contracts/apps-orders/v1.0.0/outputs.schema.json",
+	"title": "apps-orders outputs",
+	"type": "object",
+	"additionalProperties": false,
+	"properties": {
+		"service_url": { "type": "string" }
+	},
+	"required": ["service_url"]
+}

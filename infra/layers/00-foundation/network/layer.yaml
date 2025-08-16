@@ -1,0 +1,8 @@
+name: Foundation Network
+stack_id: foundation-network
+layer_order: 0
+path: infra/layers/00-foundation/network
+environments: [dev, stage, prod]
+depends_on: []
+outputs_contract: interfaces/contracts/foundation-network/v1.0.0/outputs.schema.json
+apply_strategy: auto

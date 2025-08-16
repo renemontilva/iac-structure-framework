@@ -1,0 +1,12 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "interfaces/contracts/services-db/v1.0.0/outputs.schema.json",
+	"title": "services-db outputs",
+	"type": "object",
+	"additionalProperties": false,
+	"properties": {
+		"db_endpoint": { "type": "string" },
+		"db_name": { "type": "string" }
+	},
+	"required": ["db_endpoint", "db_name"]
+}

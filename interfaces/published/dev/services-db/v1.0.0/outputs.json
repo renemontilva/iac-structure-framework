@@ -1,0 +1,4 @@
+{
+	"db_endpoint": "db.dev.example.internal:5432",
+	"db_name": "orders"
+}
