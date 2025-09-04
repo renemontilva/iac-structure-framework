@@ -1,14 +1,103 @@
 version: '3'
 
+vars:
+  REGION: '{{.REGION | default "us-east-1"}}'
+
 tasks:
+  # Docker tasks
   up:
+    desc: Start docker services
     cmds:
       - docker-compose up -d
+
   down:
+    desc: Stop docker services
     cmds:
       - docker-compose down
 
+  # Single environment tasks
   core:
     deps: [up]
     cmds:
       - echo "Hello, World!"
+
+  # Multi-environment Terraform tasks
+  deploy-all:
+    desc: Deploy all environments (dev, stg, prd) sequentially
+    cmds:
+      - ./tools/deploy-all-environments.sh apply {{.REGION}}
+
+  deploy-all-parallel:
+    desc: Deploy all environments in parallel
+    env:
+      PARALLEL_ENVIRONMENTS: true
+    cmds:
+      - ./tools/deploy-all-environments.sh apply {{.REGION}}
+
+  deploy-all-auto:
+    desc: Deploy all environments with auto-approve
+    env:
+      AUTO_APPROVE: true
+    cmds:
+      - ./tools/deploy-all-environments.sh apply {{.REGION}}
+
+  deploy-all-auto-parallel:
+    desc: Deploy all environments in parallel with auto-approve
+    env:
+      AUTO_APPROVE: true
+      PARALLEL_ENVIRONMENTS: true
+    cmds:
+      - ./tools/deploy-all-environments.sh apply {{.REGION}}
+
+  plan-all:
+    desc: Plan all environments
+    cmds:
+      - ./tools/deploy-all-environments.sh plan-all {{.REGION}}
+
+  destroy-all:
+    desc: Destroy all environments (sequential for safety)
+    cmds:
+      - ./tools/deploy-all-environments.sh destroy {{.REGION}}
+
+  destroy-all-auto:
+    desc: Destroy all environments with auto-approve
+    env:
+      AUTO_APPROVE: true
+    cmds:
+      - ./tools/deploy-all-environments.sh destroy {{.REGION}}
+
+  validate:
+    desc: Validate environment structure
+    cmds:
+      - ./tools/deploy-all-environments.sh validate
+
+  # Individual environment tasks
+  deploy-dev:
+    desc: Deploy only dev environment
+    cmds:
+      - ./tools/deploy-ordered.sh dev {{.REGION}} apply
+
+  deploy-stg:
+    desc: Deploy only staging environment
+    cmds:
+      - ./tools/deploy-ordered.sh stg {{.REGION}} apply
+
+  deploy-prd:
+    desc: Deploy only production environment
+    cmds:
+      - ./tools/deploy-ordered.sh prd {{.REGION}} apply
+
+  plan-dev:
+    desc: Plan dev environment
+    cmds:
+      - ./tools/deploy-ordered.sh dev {{.REGION}} plan
+
+  plan-stg:
+    desc: Plan staging environment
+    cmds:
+      - ./tools/deploy-ordered.sh stg {{.REGION}} plan
+
+  plan-prd:
+    desc: Plan production environment
+    cmds:
+      - ./tools/deploy-ordered.sh prd {{.REGION}} plan

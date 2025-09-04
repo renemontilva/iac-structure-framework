@@ -140,17 +140,56 @@ parallel-services: core-security core-routing
 parallel-apps: services-databases services-caching services-messaging
 	$(MAKE) -j2 apps-1 apps-2
 
+# Multi-environment targets
+.PHONY: deploy-all-environments plan-all-environments destroy-all-environments validate-environments
+
+deploy-all-environments:
+	@echo "🚀 Deploying all environments (dev, stg, prd)"
+	./tools/deploy-all-environments.sh apply $(REGION)
+
+deploy-all-environments-parallel:
+	@echo "🚀 Deploying all environments in parallel"
+	PARALLEL_ENVIRONMENTS=true ./tools/deploy-all-environments.sh apply $(REGION)
+
+plan-all-environments:
+	@echo "📋 Planning all environments"
+	./tools/deploy-all-environments.sh plan-all $(REGION)
+
+destroy-all-environments:
+	@echo "💥 Destroying all environments (sequential for safety)"
+	./tools/deploy-all-environments.sh destroy $(REGION)
+
+validate-environments:
+	@echo "🔍 Validating all environments"
+	./tools/deploy-all-environments.sh validate
+
+# Multi-environment with auto-approve
+deploy-all-auto:
+	@echo "🚀 Auto-deploying all environments"
+	AUTO_APPROVE=true ./tools/deploy-all-environments.sh apply $(REGION)
+
+deploy-all-auto-parallel:
+	@echo "🚀 Auto-deploying all environments in parallel"
+	AUTO_APPROVE=true PARALLEL_ENVIRONMENTS=true ./tools/deploy-all-environments.sh apply $(REGION)
+
 # Help target
 help:
 	@echo "Terraform DAG Orchestration"
 	@echo ""
-	@echo "Usage:"
+	@echo "Single Environment Usage:"
 	@echo "  make all ENVIRONMENT=dev REGION=us-east-1"
 	@echo "  make governance ENVIRONMENT=stg"
 	@echo "  make plan-all ENVIRONMENT=prd"
 	@echo "  make destroy-all ENVIRONMENT=dev AUTO_APPROVE=true"
 	@echo ""
-	@echo "Targets:"
+	@echo "Multi-Environment Usage:"
+	@echo "  make deploy-all-environments REGION=us-east-1"
+	@echo "  make deploy-all-environments-parallel REGION=us-east-1"
+	@echo "  make deploy-all-auto REGION=us-east-1"
+	@echo "  make plan-all-environments REGION=us-east-1"
+	@echo "  make validate-environments"
+	@echo ""
+	@echo "Single Environment Targets:"
 	@echo "  all                 - Deploy all layers in order"
 	@echo "  governance          - Deploy governance layer"
 	@echo "  core               - Deploy core layer"
@@ -158,6 +197,15 @@ help:
 	@echo "  applications       - Deploy applications layer"
 	@echo "  plan-all           - Plan all layers"
 	@echo "  destroy-all        - Destroy all layers (reverse order)"
+	@echo ""
+	@echo "Multi-Environment Targets:"
+	@echo "  deploy-all-environments        - Deploy all environments sequentially"
+	@echo "  deploy-all-environments-parallel - Deploy all environments in parallel"
+	@echo "  deploy-all-auto               - Deploy all environments with auto-approve"
+	@echo "  deploy-all-auto-parallel      - Deploy all environments parallel + auto-approve"
+	@echo "  plan-all-environments         - Plan all environments"
+	@echo "  destroy-all-environments      - Destroy all environments"
+	@echo "  validate-environments         - Validate environment structure"
 	@echo ""
 	@echo "Parallel targets:"
 	@echo "  parallel-governance - Run governance components in parallel"
